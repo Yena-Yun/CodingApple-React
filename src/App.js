@@ -1,39 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+/*eslint-disable*/
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 고기 맛집', '데이트 추천 코스']);
+  let [날짜, 날짜변경] = useState(['2월 17일', '2월 18일', '2월 19일']);
+  let [좋아요, 좋아요변경] = useState(0);
 
-  // 리액트 개발자들이 하는 일
-  // 서버에서 가져온 데이터(posts)
-  // let posts = '강남 고기 맛집'
-  // style도 변수로 작성 가능
-  let posts = { color: 'blue', fontSize: '30px'}
-
-  // 전통적인 JS 데이터 바인딩
-  // document.getElementById().innerHTML = ''?
-
-  // 리액트에서는 이렇게 할 필요 없음
-  // JSX 문법 사용: { } 안에 변수명
-  // (JSX = 리액트에서의 HTML 대용품)
-
-  function 함수() {
-    return 100
+  
+  const 제목바꾸기 = (e) => {
+    // spread 문법으로 기존 배열의 '사본'을 만든 다음 (deep copy)
+    let newArr = [...글제목];
+    // 그 사본을 가지고 원하는 내용 수정
+    newArr[0] = '여자 코트 추천';
+    // 새로운 배열인 newArr를 글제목변경함수에 넣어 state를 통째로 갈아치운다
+    글제목변경(newArr);
   }
-  함수() // '함수' 실행 (html에서 보여줄 때도 () 넣어서 똑같이)
+
+  // 과제: 버튼을 누르면 제목을 글자순으로 정렬하기
 
   return (
     <div className="App">
-      {/* { }의 사용처는 무궁무진함 - className에도 사용 가능 */}
-      {/* (아래의 경우 - Elements 탭에서 확인하면 <div className="강남 고기 맛집"> 이라고 들어가 있음) */}
-      {/* <div className={ posts }> */}
       <div className="black-nav">
-        <div style={posts}>개발 Blog</div>
+        <div>개발 Blog</div>
       </div>
-      {/* 이미지 가져올 때는 위에서 import한 후에 { } 쓰고 안에 '변수'로 가져온다 (리액트에서는 html처럼 "" 쓰지 않음) */}
-      <img src={logo} alt="" />
-      {/* 그걸 여기에 보여줘야 함 (= 데이터 바인딩) */}
-      <h4>{ 함수() }</h4> 
+
+      <button onClick={ 제목바꾸기 }>버튼</button>
+      
+      <div className="list">
+        <h3>{ 글제목[0] }<span onClick={() => { 좋아요변경(좋아요 + 1) }}>👍</span> { 좋아요 }</h3>
+        <p>{ 날짜[0] }</p>
+        <hr />
+      </div>
+      <div className="list">
+        <h3>{ 글제목[1] }</h3>
+        <p>{ 날짜[1] }</p>
+        <hr />
+      </div>
+      <div className="list">
+        <h3>{ 글제목[2] }</h3>
+        <p>{ 날짜[2] }</p>
+        <hr />
+      </div>
     </div>
   );
 }
