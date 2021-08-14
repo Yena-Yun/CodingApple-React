@@ -10,11 +10,8 @@ span {
   cursor: pointer;
 }
 
-.modal {
-  margin-top: 20px;
-  padding: 20px;
-  background: #eee;
-  text-align: center;
+button {
+  cursor: pointer;
 }
 
 .black-nav {
@@ -32,6 +29,15 @@ span {
   text-align: left;
   padding-left: 20px;
   padding-right: 20px;
+  cursor: pointer;
+}
+
+.modal {
+  margin-top: 20px;
+  padding: 20px;
+  background: #eee;
+  text-align: center;
+  cursor: pointer;
 }
 
 .App-logo {
