@@ -21,7 +21,7 @@ function App() {
       <Switch>
         {/* (Switch 있어도 Home 경로에 exact는 있어야 함) */}
         <Route exact path="/">
-          <Home shoes={shoes} />
+          <Home shoes={shoes} setShoes={shoes변경} />
         </Route>
         <Route path="/detail/:id">
           <Detail shoes={shoes} />
