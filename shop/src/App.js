@@ -7,13 +7,14 @@ import Detail from "./Detail";
 import Home from "./Home";
 import Navbar from "./ElNavbar";
 
+export const 재고context = React.createContext();
+
 function App() {
   const [shoes, shoes변경] = useState(data);
-  // useHistory: 뒤로가기 기능 구현 가능
-  // let { id } = useParams();
+  const [재고, 재고변경] = useState([10, 11, 12]);
 
   return (
-    <div className="App">
+    <재고context.Provider value={재고}>
       {/* 상단 navbar 헤더 */}
       <Navbar />
 
@@ -21,13 +22,13 @@ function App() {
       <Switch>
         {/* (Switch 있어도 Home 경로에 exact는 있어야 함) */}
         <Route exact path="/">
-          <Home shoes={shoes} setShoes={shoes변경} />
+          <Home shoes={shoes} setShoes={shoes변경} 재고={재고} />
         </Route>
         <Route path="/detail/:id">
-          <Detail shoes={shoes} />
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
         </Route>
       </Switch>
-    </div>
+    </재고context.Provider>
   );
 }
 

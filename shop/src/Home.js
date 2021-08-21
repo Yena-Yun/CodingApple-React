@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
+import 재고context from "./App";
 
 const Home = ({ shoes, setShoes }) => {
   const [loading, setLoading] = useState(false);
+  const stock = useContext(재고context);
 
   return (
     <div>
@@ -60,7 +62,7 @@ const Home = ({ shoes, setShoes }) => {
   );
 };
 
-const Card = ({ shoes, idx }) => {
+const Card = ({ shoes, idx, stock }) => {
   return (
     <div className="col-md-4">
       {/* 중간에 ${} 쓰고 싶으면 그 줄 전체를 { }로 감싸야 */}
@@ -69,8 +71,15 @@ const Card = ({ shoes, idx }) => {
       <p>
         {shoes.content} & {shoes.price}
       </p>
+      <Test></Test>
     </div>
   );
 };
+
+function Test() {
+  const 재고 = useContext(재고context);
+
+  return <p>재고: {재고}</p>;
+}
 
 export default Home;

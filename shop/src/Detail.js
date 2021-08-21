@@ -1,10 +1,12 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import 재고context from "./App";
 
-const Detail = ({ shoes }) => {
+const Detail = ({ shoes, 재고, 재고변경 }) => {
   const history = useHistory();
   const [alert, setAlert] = useState(true);
+  const 재고문맥 = useContext(재고context); // App에서 받아온 재고라는 state가 그대로 들어있음
 
   // useParams():  현재 URL에 적힌 모든 파라미터를 {파라미터1,파라미터2} 이런 식으로 저장해주는 함수
   // destructuring 문법을 이용해서 따로따로 변수로 빼서 저장
@@ -37,7 +39,9 @@ const Detail = ({ shoes }) => {
           <h4 className="pt-5">{shoes[id].title}</h4>
           <p>{shoes[id].content}</p>
           <p>{shoes[id].price}원</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button className="btn btn-danger" onClick={() => 재고변경([9, 10, 11])}>
+            주문하기
+          </button>
           <button
             className="btn btn-danger"
             onClick={() => {
@@ -48,6 +52,9 @@ const Detail = ({ shoes }) => {
           </button>
         </div>
       </div>
+      <div>
+        <Info 재고={재고} 재고변경={재고변경}></Info>
+      </div>
       {/* 첫 Detail 컴포넌트 로딩 시 2초간 띄우는 Alert */}
       {alert ? (
         <div className="my-alert">
@@ -56,6 +63,10 @@ const Detail = ({ shoes }) => {
       ) : null}
     </div>
   );
+};
+
+const Info = ({ 재고 }) => {
+  return <p>재고: {재고} </p>;
 };
 
 export default Detail;
