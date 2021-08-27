@@ -4,6 +4,20 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+let 기본state = [
+  { id: 0, name: "멋진신발", quan: 2 },
+  { id: 1, name: "이쁜신발", quan: 4 },
+  { id: 2, name: "날랜신발", quan: 3 },
+];
+
+function reducer(state = 기본state, 액션) {
+  return state;
+}
+
+let store = createStore(reducer);
 
 ReactDOM.render(
   // BrowserRouter 대신 HashRouter 사용 가능 -- 보안상의 이유
@@ -13,7 +27,9 @@ ReactDOM.render(
   // 반면 BrowserRouter는 라우팅을 리액트가 아니라 '서버'에게 요청할 수도 있음 (위험)
   // 그래서 BrowserRouter를 사용한다면 서버 측에서 서버 라우팅을 방지하는 API를 작성해 두어야 함
   <BrowserRouter>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>,
   document.getElementById("root")
 );

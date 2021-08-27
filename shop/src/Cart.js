@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Table } from "react-bootstrap";
+import { connect } from "react-redux";
 
-const Cart = (props) => {
+const Cart = ({ state }) => {
   return (
     <div>
       <Table responsive>
@@ -15,30 +16,28 @@ const Cart = (props) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            {Array.from({ length: 12 }).map((_, index) => (
-              <td key={index}>Table cell {index}</td>
-            ))}
-          </tr>
-          <tr>
-            <td>2</td>
-            {Array.from({ length: 12 }).map((_, index) => (
-              <td key={index}>Table cell {index}</td>
-            ))}
-          </tr>
-          <tr>
-            <td>3</td>
-            {Array.from({ length: 12 }).map((_, index) => (
-              <td key={index}>Table cell {index}</td>
-            ))}
-          </tr>
+          {state.map((a, i) => {
+            return (
+              <tr key={i}>
+                <td>{a.id}</td>
+                <td>{a.name}</td>
+                <td>{a.quan}</td>
+                <td>
+                  <button>+</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </div>
   );
 };
 
-const CartBlock = styled.div``;
+function state를props화(state) {
+  return {
+    state: state,
+  };
+}
 
-export default Cart;
+export default connect(state를props화)(Cart);
