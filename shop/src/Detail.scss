@@ -1,0 +1,23 @@
+$메인칼라: black;
+
+.wow-enter {
+	opacity: 0;
+}
+
+.wow-enter-active {
+	opacity: 1;
+	transition: all 500ms;
+}
+
+.red {
+	color: $메인칼라;
+}
+
+@mixin 함수() {
+	background: #eee;
+	padding: 15px;
+	border-radius: 5px;
+	max-width: 100%;
+	width: 100%;
+	margin: auto;
+}

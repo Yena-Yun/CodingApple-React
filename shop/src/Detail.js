@@ -1,12 +1,13 @@
 /* eslint-disable */
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import 재고context from "./App";
+import { 재고context } from "./App";
+import "./Detail.scss";
 
-const Detail = ({ shoes, 재고, 재고변경 }) => {
+const Detail = ({ shoes, 재고변경 }) => {
   const history = useHistory();
   const [alert, setAlert] = useState(true);
-  const 재고문맥 = useContext(재고context); // App에서 받아온 재고라는 state가 그대로 들어있음
+  const 재고 = useContext(재고context); // App에서 받아온 재고라는 state가 그대로 들어있음
 
   // useParams():  현재 URL에 적힌 모든 파라미터를 {파라미터1,파라미터2} 이런 식으로 저장해주는 함수
   // destructuring 문법을 이용해서 따로따로 변수로 빼서 저장
@@ -53,7 +54,7 @@ const Detail = ({ shoes, 재고, 재고변경 }) => {
         </div>
       </div>
       <div>
-        <Info 재고={재고} 재고변경={재고변경}></Info>
+        <Info></Info>
       </div>
       {/* 첫 Detail 컴포넌트 로딩 시 2초간 띄우는 Alert */}
       {alert ? (
@@ -65,7 +66,8 @@ const Detail = ({ shoes, 재고, 재고변경 }) => {
   );
 };
 
-const Info = ({ 재고 }) => {
+const Info = () => {
+  const 재고 = useContext(재고context);
   return <p>재고: {재고} </p>;
 };
 

@@ -1,11 +1,16 @@
-import React, { useState, useContext } from "react";
-import { Button } from "react-bootstrap";
+import React, { useState, useContext, useEffect } from "react";
+import { Button, Nav } from "react-bootstrap";
 import axios from "axios";
-import 재고context from "./App";
+import { 재고context } from "./App";
+import { CSSTransition } from "react-transition-group";
+import "./Home.scss";
 
 const Home = ({ shoes, setShoes }) => {
   const [loading, setLoading] = useState(false);
-  const stock = useContext(재고context);
+  const 재고 = useContext(재고context);
+  // 몇 번째 탭을 눌렀는지 state로 저장
+  const [누른탭, 누른탭변경] = useState(0);
+  const [스위치, 스위치변경] = useState(false);
 
   return (
     <div>
@@ -58,11 +63,69 @@ const Home = ({ shoes, setShoes }) => {
       </p>
       {/* 로딩중 UI */}
       {loading ? <div>로딩 중입니다..</div> : null}
+
+      {/* defaultActiveKey: 기본적으로 눌려진 키 */}
+      <Nav className="mt-5" defaultActiveKey="link-0" as="ul">
+        <Nav.Item as="li">
+          <Nav.Link
+            href="/home"
+            eventKey="link-0"
+            onClick={() => {
+              스위치변경(false);
+              누른탭변경(0);
+            }}
+          >
+            Active
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item as="li">
+          <Nav.Link
+            eventKey="link-1"
+            onClick={() => {
+              스위치변경(false);
+              누른탭변경(1);
+            }}
+          >
+            Link
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item as="li">
+          <Nav.Link
+            eventKey="link-2"
+            onClick={() => {
+              스위치변경(false);
+              누른탭변경(2);
+            }}
+          >
+            Link
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+      {/* in: 애니메이션 동작 스위치 (true일 때만 애니메이션이 부여됨) */}
+      <CSSTransition in={스위치} classNames="wow" timeout={500}>
+        <TabContent 누른탭={누른탭} 스위치변경={스위치변경} />
+      </CSSTransition>
     </div>
   );
 };
 
-const Card = ({ shoes, idx, stock }) => {
+function TabContent({ 누른탭, 스위치변경 }) {
+  useEffect(() => {
+    스위치변경(true);
+  });
+
+  if (누른탭 === 0) {
+    return <div>0번째 내용입니다</div>;
+  } else if (누른탭 === 1) {
+    return <div>1번째 내용입니다</div>;
+  } else if (누른탭 === 2) {
+    return <div>2번째 내용입니다</div>;
+  }
+}
+
+const Card = ({ shoes, idx }) => {
+  const 재고 = useContext(재고context);
   return (
     <div className="col-md-4">
       {/* 중간에 ${} 쓰고 싶으면 그 줄 전체를 { }로 감싸야 */}

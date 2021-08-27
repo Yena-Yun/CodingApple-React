@@ -3,18 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   // BrowserRouter 대신 HashRouter 사용 가능 -- 보안상의 이유
-  // HashRouter를 사용하면 주소창 맨 뒤에 #이 생기는데
-  // # 뒤에 적히는 것들은 서버에 전달되지 않고, 이후 라우팅은 리액트가 알아서 해줌
+  // HashRouter를 사용하면 주소창 맨 뒤에 #이 생기는데 # 뒤에 적히는 것들은 서버에 전달되지 않음
+  // ++ 이후 라우팅은 리액트가 알아서 하게 됨
 
-  // 반면, BrowserRouter는 라우팅을 리액트가 아니라 서버에게 요청할 수도 있어서 위험
-  // 그래서 BrowserRouter 사용 시 서버에서 서버 라우팅을 방지하는 API를 작성해둬야 함
-  <HashRouter>
+  // 반면 BrowserRouter는 라우팅을 리액트가 아니라 '서버'에게 요청할 수도 있음 (위험)
+  // 그래서 BrowserRouter를 사용한다면 서버 측에서 서버 라우팅을 방지하는 API를 작성해 두어야 함
+  <BrowserRouter>
     <App />
-  </HashRouter>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
