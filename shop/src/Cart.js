@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
-const Cart = ({ state }) => {
+const Cart = (props) => {
   return (
     <div>
       <Table responsive>
@@ -16,14 +16,30 @@ const Cart = ({ state }) => {
           </tr>
         </thead>
         <tbody>
-          {state.map((a, i) => {
+          {props.state.map((a, i) => {
             return (
               <tr key={i}>
                 <td>{a.id}</td>
                 <td>{a.name}</td>
                 <td>{a.quan}</td>
                 <td>
-                  <button>+</button>
+                  <button
+                    onClick={() => {
+                      // props에서 dispatch를 꺼내는 게 아니라 reducer에 데이터 수정요청을 하는 것
+                      // dispatch 안에 어떤 요청을 할 건지 'type'의 value로 넣어줌
+                      // (connect로 reducer에서 state를 받아와서 props로 만들면서 그 어딘가에서 dispatch도 받아옴 -> 따로 import 안 해도 됨)
+                      props.dispatch({ type: "수량증가" });
+                    }}
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => {
+                      props.dispatch({ type: "수량감소" });
+                    }}
+                  >
+                    -
+                  </button>
                 </td>
               </tr>
             );

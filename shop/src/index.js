@@ -7,14 +7,39 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
-let 기본state = [
+let 초기값 = [
   { id: 0, name: "멋진신발", quan: 2 },
   { id: 1, name: "이쁜신발", quan: 4 },
   { id: 2, name: "날랜신발", quan: 3 },
 ];
 
-function reducer(state = 기본state, 액션) {
-  return state;
+// reducer는 항상 state를 반환해야 함
+function reducer(state = 초기값, 액션) {
+  // 액션 = onClick으로 넘어오는 state 데이터 수정방법('이름'이라서 아무거나 적어도 됨)
+  if (액션.type === "수량증가") {
+    // deep copy (완전히 독립적인 사본 하나가 생김)
+    let copy = [...state];
+    // 사본 수정 (+1)
+    copy[0].quan++;
+    // 수정된 사본 반환
+    return copy;
+
+    // 액션명이 수량감소 이면
+  } else if (액션.type === "수량감소") {
+    // 사본 만들고
+    let copy = [...state];
+    // 사본 수정 (-1)
+    copy[0].quan--;
+    // 만약 감소하다가 갯수가 0이 되면 계속 0 반환
+    if (copy[0].quan < 0) copy[0].quan = 0;
+    // 사본 반환
+    return copy;
+
+    // 데이터가 수정이 안 됐으면
+  } else {
+    // 그냥 초기값 반환
+    return state;
+  }
 }
 
 let store = createStore(reducer);
