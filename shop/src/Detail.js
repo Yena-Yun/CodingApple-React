@@ -3,8 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { 재고context } from "./App";
 import "./Detail.scss";
+import { connect } from "react-redux";
 
-const Detail = ({ shoes, 재고변경 }) => {
+const Detail = (props) => {
   const history = useHistory();
   const [alert, setAlert] = useState(true);
   const 재고 = useContext(재고context); // App에서 받아온 재고라는 state가 그대로 들어있음
@@ -37,10 +38,19 @@ const Detail = ({ shoes, 재고변경 }) => {
           <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
         </div>
         <div className="col-md-6 mt-4">
-          <h4 className="pt-5">{shoes[id].title}</h4>
-          <p>{shoes[id].content}</p>
-          <p>{shoes[id].price}원</p>
-          <button className="btn btn-danger" onClick={() => 재고변경([9, 10, 11])}>
+          <h4 className="pt-5">{props.shoes[id].title}</h4>
+          <p>{props.shoes[id].content}</p>
+          <p>{props.shoes[id].price}원</p>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              props.재고변경([9, 10, 11]);
+              props.dispatch({ type: "항목추가", payload: { id: 3, name: "컨버스화", quan: 1 } });
+              // dispatch만 하면 새로고침 시 state가 모두 초기화됨 (추가된 항목을 볼 수 없음)
+              //  => useHistory의 history.push로 cart로 바로 이동하면 새로고침이 발생하지 않아 화면에서 추가된 항목을 볼 수 있음 (페이지 강제이동)
+              history.push("/cart");
+            }}
+          >
             주문하기
           </button>
           <button
@@ -71,4 +81,12 @@ const Info = () => {
   return <p>재고: {재고} </p>;
 };
 
-export default Detail;
+function state를props화(state) {
+  console.log(state);
+  return {
+    state: state.reducer,
+    alert열렸니: state.reducer2,
+  };
+}
+
+export default connect(state를props화)(Detail);

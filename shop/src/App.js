@@ -25,6 +25,9 @@ function App() {
         <Route exact path="/">
           <Home shoes={shoes} setShoes={shoes변경} />
         </Route>
+        <Route exact path="/detail">
+          <Detail />
+        </Route>
         <Route path="/detail/:id">
           <재고context.Provider value={재고}>
             <Detail shoes={shoes} 재고변경={재고변경} />

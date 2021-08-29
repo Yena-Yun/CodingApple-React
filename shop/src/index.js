@@ -31,6 +31,16 @@ let 초기값 = [
 
 // reducer는 항상 state를 반환해야 함
 function reducer(state = 초기값, 액션) {
+  if (액션.type === "항목추가") {
+    if (액션.payload.id === state.id) {
+      return 액션.payload.id + 1;
+    } else {
+      let copy = [...state];
+      copy.push(액션.payload);
+      return copy;
+    }
+  }
+
   // 액션 = onClick으로 넘어오는 state 데이터 수정방법('이름'이라서 아무거나 적어도 됨)
   if (액션.type === "수량증가") {
     // deep copy (완전히 독립적인 사본 하나가 생김)
