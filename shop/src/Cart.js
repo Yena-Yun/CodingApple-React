@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
@@ -46,13 +45,34 @@ const Cart = (props) => {
           })}
         </tbody>
       </Table>
+
+      {/* state를props화 함수에 의해 store의 state들이 props가 되었으므로
+        key로 사용 + 앞에 'props' 붙이기 */}
+      {props.alert열렸니 ? (
+        <div className="my-alert2">
+          <p>지금 구매하시면 신규할인 20%</p>
+          <button
+            onClick={() => {
+              props.dispatch({ type: "숨김" });
+            }}
+          >
+            닫기
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };
 
+// reducer가 2개 이상이면 combineReducers에 의해 '객체' 형태로 넘어오므로
+// 뽑아 쓸 때도 객체 형태로 뽑아쓰기
 function state를props화(state) {
+  // connect에 의해 store의 reducer들(객체 형태)이 state 변수로 넘어옴
+  console.log(state);
+
   return {
-    state: state,
+    state: state.reducer,
+    alert열렸니: state.reducer2,
   };
 }
 

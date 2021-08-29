@@ -5,7 +5,23 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
+
+// alert가 보이거나 안 보이거나 하는 상태 저장
+// Cart.js에서만 쓰기 때문에 굳이 redux에 저장할 필요가 없음 => useState 사용
+// let alert초기값 = true;
+
+// reducer는 state 종류에 따라 여러 개 만들 수 있음
+// function reducer2(state = alert초기값, 액션) {
+function reducer2(state = true, 액션) {
+  // 변수 안 만들고 초기값을 바로 넣기도 함 (길이가 짧을 때)
+  if (액션.type === "숨김") {
+    state = false;
+    return state;
+  } else {
+    return state;
+  }
+}
 
 let 초기값 = [
   { id: 0, name: "멋진신발", quan: 2 },
@@ -42,7 +58,8 @@ function reducer(state = 초기값, 액션) {
   }
 }
 
-let store = createStore(reducer);
+// reducer를 여러 개 쓸 때: ','로 연결 x, combineReducers 사용 (import + 안에 reducer들은 객체형으로)
+let store = createStore(combineReducers({ reducer, reducer2 }));
 
 ReactDOM.render(
   // BrowserRouter 대신 HashRouter 사용 가능 -- 보안상의 이유
