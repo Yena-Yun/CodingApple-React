@@ -1,12 +1,12 @@
 /* eslint-disable */
-import React, { useState } from "react";
-import "./App.css";
-import data from "./data";
-import { Route, Switch } from "react-router-dom";
-import Detail from "./Detail";
-import Home from "./Home";
-import ElNavbar from "./ElNavbar";
-import Cart from "./Cart";
+import React, { useState } from 'react';
+import './App.css';
+import data from './data';
+import { Route, Switch } from 'react-router-dom';
+import Detail from './Detail';
+import Home from './Home';
+import ElNavbar from './ElNavbar';
+import Cart from './Cart';
 
 export const 재고context = React.createContext();
 
@@ -30,7 +30,7 @@ function App() {
         </Route>
         <Route path="/detail/:id">
           <재고context.Provider value={재고}>
-            <Detail shoes={shoes} 재고변경={재고변경} />
+            <Detail shoes={shoes} shoes변경={shoes변경} 재고변경={재고변경} />
           </재고context.Provider>
         </Route>
         <Route path="/cart">

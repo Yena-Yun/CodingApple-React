@@ -19,3 +19,16 @@
   padding-top: 16px;
   padding-bottom: 4px;
 }
+
+.tab {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #eee;
+}
+
+.tab:active {
+  color: grey;
+  font-weight: 600;
+}
