@@ -5,7 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/configStore';
+import { createStore } from 'redux';
+import rootReducer from './redux';
+
+let store = createStore(rootReducer);
 
 ReactDOM.render(
   // BrowserRouter 대신 HashRouter 사용 가능 -- 보안상의 이유
