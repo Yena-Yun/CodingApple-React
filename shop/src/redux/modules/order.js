@@ -7,10 +7,19 @@
 // function reducer2(state = alert초기값, 액션) {
 // 변수 안 만들고 초기값을 바로 넣기도 함 (초기값 길이가 짧을 때)
 export function reducer2(state = true, 액션) {
-  if (액션.type === '숨김') {
-    state = false;
-    return state;
-  } else {
-    return state;
+  switch (액션.type) {
+    case '숨김': {
+      state = false;
+      return false;
+    }
+    default:
+      return state;
   }
+
+  // if (액션.type === '숨김') {
+  //   state = false;
+  //   return state;
+  // } else {
+  //   return state;
+  // }
 }
