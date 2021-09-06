@@ -7,6 +7,7 @@ import './Home.scss';
 
 const Home = ({ shoes, setShoes }) => {
   const [loading, setLoading] = useState(false);
+  const [watched, setWatched] = useState(false);
   const 재고 = useContext(재고context);
 
   return (
@@ -21,23 +22,32 @@ const Home = ({ shoes, setShoes }) => {
           <Button variant="primary">Learn more</Button>
         </p>
       </div>
+
+      {/* 최근 본 상품 조회 */}
+      {watched ? (
+        <div className="container">
+          <Card style={{ width: '100%', marginTop: '2rem' }}>
+            <Card.Header>최근 본 상품</Card.Header>
+            <ListGroup variant="flush" style={{ minHeight: '15rem' }}>
+              {shoes.map((shoe, i) => (
+                <ListGroup.Item>
+                  <ElCartRecent shoes={shoe} i={i} key={i} />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Card>
+        </div>
+      ) : null}
+
+      {/* Home 화면 상품 */}
       <div className="container">
-        <Card style={{ width: '100%', marginTop: '2rem' }}>
-          <Card.Header>최근 본 상품</Card.Header>
-          <ListGroup variant="flush" style={{ minHeight: '15rem' }}>
-            {shoes.map((shoe, i) => (
-              <ListGroup.Item>
-                <ElCartRecent shoes={shoe} i={i} key={i} />
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Card>
         <div className="row">
           {shoes.map((shoe, i) => (
-            <ElCard shoes={shoe} i={i} key={i} />
+            <ElCard shoes={shoe} i={i} key={i} setWatched={setWatched} />
           ))}
         </div>
       </div>
+
       {/* 더보기 버튼 (누르면 서버에서 추가 데이터를 받아와서 보여줌) */}
       <p>
         <Button
@@ -47,6 +57,7 @@ const Home = ({ shoes, setShoes }) => {
             setLoading(true);
             axios
               .get('https://codingapple1.github.io/shop/data2.json')
+              // 성공하면
               .then((result) => {
                 // 로딩을 끝냄
                 setLoading(false);
@@ -57,6 +68,7 @@ const Home = ({ shoes, setShoes }) => {
                 //    새로 받은 result의 'data'(key값이 아니라 여기서는 문법)를 추가
                 setShoes([...shoes, ...result.data]);
               })
+              // 실패하면
               .catch((e) => {
                 console.log(e);
                 // 로딩을 끝내고
@@ -83,7 +95,7 @@ const ElCard = (props) => {
     // 메인페이지에 있는 각 상품 카드를 눌렀을 때 상세페이지로 이동
     // (Card에 onClick으로 주는 게 아니라 Card의 div에 줘야 함)
     <div>
-      <ElCartRecent shoes={props.shoes} />
+      <ElCartRecent shoes={props.shoes} setWatched={props.setWatched} />
       <p>
         {props.shoes.content} & {props.shoes.price}
       </p>
@@ -103,12 +115,20 @@ function ElCartRecent(props) {
   const history = useHistory();
   console.log(props);
 
+  const setLocalStorage = () => {
+    let copy = new Set();
+    copy.add(parseInt(props.shoes.id));
+    localStorage.setItem('watched', copy);
+  };
+
   return (
     // 메인페이지에 있는 각 상품 카드를 눌렀을 때 상세페이지로 이동
     // (Card에 onClick으로 주는 게 아니라 Card의 div에 줘야 함)
     <div
       className="col-md-4"
       onClick={() => {
+        setLocalStorage();
+        props.setWatched(true);
         history.push('/detail/' + props.shoes.id);
       }}
     >

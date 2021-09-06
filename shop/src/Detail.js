@@ -30,6 +30,23 @@ const Detail = (props) => {
       setAlert(false);
     }, 2000);
 
+    var arr = localStorage.getItem('watched');
+    if (arr === null) {
+      arr = [];
+    } else {
+      arr = JSON.parse(arr);
+    }
+
+    // 위에 useParams()로 받아온 id
+    arr.push(id);
+    arr = new Set(arr);
+    // Set을 다시 조작하기 쉬운 Array로 바꾸기
+    // spread 문법 = 괄호 벗기기
+    arr = [...arr];
+
+    // JSON.stringify: 빠짐없이 따옴표("") 쳐줌 (key, value 전부 문자열로 만듦)
+    localStorage.setItem('watched', JSON.stringify(arr));
+
     // useEffect 안의 return + 함수는 컴포넌트가 사라질 때 return의 함수 실행
     return () => {
       clearTimeout(alarm); // clearTimeout: setTimeout 해제
