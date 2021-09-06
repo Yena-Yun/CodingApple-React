@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button, Nav } from 'react-bootstrap';
+import { Button, Nav, ListGroup, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { 재고context } from './App';
 import { useHistory } from 'react-router-dom';
@@ -22,9 +22,19 @@ const Home = ({ shoes, setShoes }) => {
         </p>
       </div>
       <div className="container">
+        <Card style={{ width: '100%', marginTop: '2rem' }}>
+          <Card.Header>최근 본 상품</Card.Header>
+          <ListGroup variant="flush" style={{ minHeight: '15rem' }}>
+            {shoes.map((shoe, i) => (
+              <ListGroup.Item>
+                <ElCartRecent shoes={shoe} i={i} key={i} />
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Card>
         <div className="row">
           {shoes.map((shoe, i) => (
-            <Card shoes={shoe} i={i} key={i} />
+            <ElCard shoes={shoe} i={i} key={i} />
           ))}
         </div>
       </div>
@@ -44,7 +54,7 @@ const Home = ({ shoes, setShoes }) => {
                 // shoes 상태는 배열([])
                 //  => 따라서 변경함수 안에 들어갈 내용도 배열이 되어야 함
                 //    배열 안에 기존 shoes는 그대로 넣어주고
-                //    새로 받은 result의 'data'를 추가
+                //    새로 받은 result의 'data'(key값이 아니라 여기서는 문법)를 추가
                 setShoes([...shoes, ...result.data]);
               })
               .catch((e) => {
@@ -65,9 +75,33 @@ const Home = ({ shoes, setShoes }) => {
   );
 };
 
-const Card = (props) => {
+const ElCard = (props) => {
   const 재고 = useContext(재고context);
   const history = useHistory();
+
+  return (
+    // 메인페이지에 있는 각 상품 카드를 눌렀을 때 상세페이지로 이동
+    // (Card에 onClick으로 주는 게 아니라 Card의 div에 줘야 함)
+    <div>
+      <ElCartRecent shoes={props.shoes} />
+      <p>
+        {props.shoes.content} & {props.shoes.price}
+      </p>
+      <Test></Test>
+    </div>
+  );
+};
+
+function Test() {
+  const 재고 = useContext(재고context);
+
+  return <p>재고: {재고}</p>;
+}
+
+function ElCartRecent(props) {
+  const 재고 = useContext(재고context);
+  const history = useHistory();
+  console.log(props);
 
   return (
     // 메인페이지에 있는 각 상품 카드를 눌렀을 때 상세페이지로 이동
@@ -84,21 +118,11 @@ const Card = (props) => {
           props.shoes.id + 1
         }.jpg`}
         alt=""
-        width="100%"
+        width="70%"
       />
       <h4>{props.shoes.title}</h4>
-      <p>
-        {props.shoes.content} & {props.shoes.price}
-      </p>
-      <Test></Test>
     </div>
   );
-};
-
-function Test() {
-  const 재고 = useContext(재고context);
-
-  return <p>재고: {재고}</p>;
 }
 
 export default Home;
